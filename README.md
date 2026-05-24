@@ -1,6 +1,10 @@
-# GitScope 🚀
+# GitScope 
 
 A modern GitHub Profile Viewer built using HTML, CSS, and JavaScript.
+
+## Preview
+
+![Preview](screenshot.png)
 
 ## Features
 - GitHub profile search
