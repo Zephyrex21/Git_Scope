@@ -2,6 +2,9 @@
 
 A modern GitHub Profile Viewer built using HTML, CSS, and JavaScript.
 
+## Live Demo
+https://gitscope-zephyr.netlify.app/
+
 ## Preview
 
 ![Preview](screenshot.png)
@@ -20,9 +23,6 @@ A modern GitHub Profile Viewer built using HTML, CSS, and JavaScript.
 - CSS3
 - Vanilla JavaScript
 - GitHub REST API
-
-## Live Demo
-(Add your Netlify/Vercel link here later)
 
 ## Author
 Saurabh Raj Shekhar
