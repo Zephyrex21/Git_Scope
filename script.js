@@ -166,13 +166,15 @@ const SVG = {
   twitter: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
   company: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg>`,
   email: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>`,
+  projects: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 3h4v4H3zm0 7h4v4H3zm0 7h4v4H3zm7-14h4v4h-4zm0 7h4v4h-4zm0 7h4v4h-4zm7-14h4v4h-4zm0 7h4v4h-4zm0 7h4v4h-4z"/></svg>`,
+  linkedin: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`,
 };
 
 /* Home user hardcoded chip definitions */
 const HOME_CHIPS = {
-  b: { label:"LeetCode",  value:"Zephyrex_21",        href:"https://leetcode.com/u/Zephyrex_21/",                    icon:SVG.leetcode,  color:"ci-b" },
-  c: { label:"Instagram", value:"@_raj.shekharrr",    href:"https://www.instagram.com/_raj.shekharrr/",              icon:SVG.instagram, color:"ci-c" },
-  d: { label:"Netlify",   value:"Zephyr Labs",         href:"https://app.netlify.com/teams/zephyr-labs/projects",    icon:SVG.netlify,   color:"ci-d" },
+  b: { label:"LeetCode",  value:"Zephyrex_21",         href:"https://leetcode.com/u/Zephyrex_21/",                       icon:SVG.leetcode,  color:"ci-b" },
+  c: { label:"Instagram", value:"@_raj.shekharrr",     href:"https://www.instagram.com/_raj.shekharrr/",                 icon:SVG.instagram, color:"ci-c" },
+  d: { label:"LinkedIn",  value:"Saurabh Raj Shekhar", href:"https://www.linkedin.com/in/saurabh-raj-shekhar-8a92b73b0/", icon:SVG.linkedin,  color:"ci-d" },
 };
 
 /* ──────────────────── DOM ────────────────────── */
@@ -247,34 +249,24 @@ function setLocChip(value) {
 
 /* build other-user chip defs from GitHub API data */
 function buildOtherChips(d) {
-  // ── Website / Blog ──
-  const blog = d.blog?.trim() || "";
+  // ── Chip B: Website / Blog ──
+  const blog        = d.blog?.trim() || "";
   const blogUrl     = blog ? (blog.startsWith("http") ? blog : `https://${blog}`) : "";
   const blogDisplay = blog.replace(/^https?:\/\/(www\.)?/i,"").replace(/\/$/,"");
 
-  // ── Social: Twitter first, fallback to email ──
-  const tw    = d.twitter_username?.trim() || "";
-  const email = d.email?.trim() || "";
+  // ── Chip C: Projects → always available (GitHub repos tab) ──
+  const reposUrl = `${d.html_url}?tab=repositories`;
+  const reposLabel = d.public_repos > 0
+    ? `${d.public_repos} Public Repo${d.public_repos !== 1 ? "s" : ""}`
+    : "Repositories";
 
-  let chipC;
-  if (tw) {
-    chipC = { label:"Twitter", value:`@${tw}`, href:`https://x.com/${tw}`, icon:SVG.twitter, color:"ci-c" };
-  } else if (email) {
-    chipC = { label:"Email", value:email, href:`mailto:${email}`, icon:SVG.email, color:"ci-c" };
-  } else if (blogDisplay && !blog) {
-    // edge: no blog either — leave empty
-    chipC = { label:"Twitter", value:"", href:"#", icon:SVG.twitter, color:"ci-c" };
-  } else {
-    chipC = { label:"Twitter", value:"", href:"#", icon:SVG.twitter, color:"ci-c" };
-  }
-
-  // ── Affiliation (was Company) ──
+  // ── Chip D: Affiliation ──
   const co = (d.company || "").trim().replace(/^@/,"");
 
   return {
-    b: { label:"Website",     value:blogDisplay, href:blogUrl, icon:SVG.website, color:"ci-b" },
-    c: chipC,
-    d: { label:"Affiliation", value:co, href:"#", icon:SVG.company, color:"ci-d" },
+    b: { label:"Website",     value:blogDisplay, href:blogUrl,   icon:SVG.website,  color:"ci-b" },
+    c: { label:"Projects",    value:reposLabel,  href:reposUrl,  icon:SVG.projects, color:"ci-c" },
+    d: { label:"Affiliation", value:co,          href:"#",       icon:SVG.company,  color:"ci-d" },
   };
 }
 

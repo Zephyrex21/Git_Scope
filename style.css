@@ -23,7 +23,7 @@
       --chip-a-bg:  rgba(0,122,255,0.12);   --chip-a-fg:#007AFF;
       --chip-b-bg:  rgba(255,149,0,0.12);   --chip-b-fg:#FF9500;
       --chip-c-bg:  rgba(255,45,135,0.12);  --chip-c-fg:#FF2D87;
-      --chip-d-bg:  rgba(0,175,93,0.12);    --chip-d-fg:#00AF5D;
+      --chip-d-bg:  rgba(10,102,194,0.12);    --chip-d-fg:#0A66C2;
     }
     [data-theme="dark"] {
       --bg:         #050508;
@@ -43,7 +43,7 @@
       --chip-a-bg:  rgba(0,122,255,0.18);
       --chip-b-bg:  rgba(255,149,0,0.18);
       --chip-c-bg:  rgba(255,45,135,0.18);
-      --chip-d-bg:  rgba(0,175,93,0.18);
+      --chip-d-bg:  rgba(10,102,194,0.20);
     }
 
     /* ── RESET ── */
