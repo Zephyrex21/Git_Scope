@@ -1,3 +1,4 @@
+
 "use strict";
 
 /* ──────────────────── BACKGROUND CANVAS ANIMATION ────────────────────── */
@@ -164,6 +165,7 @@ const SVG = {
   website: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`,
   twitter: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
   company: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg>`,
+  email: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>`,
 };
 
 /* Home user hardcoded chip definitions */
@@ -245,17 +247,34 @@ function setLocChip(value) {
 
 /* build other-user chip defs from GitHub API data */
 function buildOtherChips(d) {
+  // ── Website / Blog ──
   const blog = d.blog?.trim() || "";
-  const blogUrl = blog ? (blog.startsWith("http") ? blog : `https://${blog}`) : "";
+  const blogUrl     = blog ? (blog.startsWith("http") ? blog : `https://${blog}`) : "";
   const blogDisplay = blog.replace(/^https?:\/\/(www\.)?/i,"").replace(/\/$/,"");
 
-  const tw = d.twitter_username?.trim() || "";
+  // ── Social: Twitter first, fallback to email ──
+  const tw    = d.twitter_username?.trim() || "";
+  const email = d.email?.trim() || "";
+
+  let chipC;
+  if (tw) {
+    chipC = { label:"Twitter", value:`@${tw}`, href:`https://x.com/${tw}`, icon:SVG.twitter, color:"ci-c" };
+  } else if (email) {
+    chipC = { label:"Email", value:email, href:`mailto:${email}`, icon:SVG.email, color:"ci-c" };
+  } else if (blogDisplay && !blog) {
+    // edge: no blog either — leave empty
+    chipC = { label:"Twitter", value:"", href:"#", icon:SVG.twitter, color:"ci-c" };
+  } else {
+    chipC = { label:"Twitter", value:"", href:"#", icon:SVG.twitter, color:"ci-c" };
+  }
+
+  // ── Affiliation (was Company) ──
   const co = (d.company || "").trim().replace(/^@/,"");
 
   return {
-    b: { label:"Website",  value:blogDisplay, href:blogUrl,                           icon:SVG.website,  color:"ci-b" },
-    c: { label:"Twitter",  value:tw ? `@${tw}` : "", href:tw ? `https://x.com/${tw}` : "#", icon:SVG.twitter,  color:"ci-c" },
-    d: { label:"Company",  value:co,          href:"#",                               icon:SVG.company,  color:"ci-d" },
+    b: { label:"Website",     value:blogDisplay, href:blogUrl, icon:SVG.website, color:"ci-b" },
+    c: chipC,
+    d: { label:"Affiliation", value:co, href:"#", icon:SVG.company, color:"ci-d" },
   };
 }
 

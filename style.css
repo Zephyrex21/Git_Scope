@@ -1,4 +1,4 @@
-/* ── VARIABLES ── */
+    /* ── VARIABLES ── */
     :root {
       --bg:         #F0F2F8;
       --surface:    rgba(255,255,255,0.75);
@@ -79,12 +79,12 @@
       display:flex;
       flex-direction:column;
       align-items:center;
-      padding:48px 20px 80px;
+      padding:20px 16px 24px;
     }
     .container{
       width:100%;max-width:660px;
       display:flex;flex-direction:column;
-      gap:16px;
+      gap:10px;
     }
 
     /* ── HEADER ── */
@@ -231,11 +231,15 @@
 
     /* banner */
     .banner{
-      height:90px;
+      height:68px;
       background:linear-gradient(120deg,#007AFF,#5AC8FA,#34C759,#AF52DE,#FF9500,#007AFF);
       background-size:400% 400%;
       animation:bannerShift 10s ease infinite;
       position:relative;
+    }
+    [data-theme="dark"] .banner{
+      background:linear-gradient(120deg,#12002B,#001A3F,#003344,#2D1060,#001A3F,#12002B);
+      background-size:400% 400%;
     }
     @keyframes bannerShift{
       0%{background-position:0% 50%}
@@ -244,17 +248,17 @@
     }
     .banner::after{
       content:"";position:absolute;inset:0;
-      background:linear-gradient(to bottom,transparent 60%,var(--surface) 100%);
+      background:linear-gradient(to bottom,transparent 55%,var(--surface) 100%);
     }
 
     /* profile head */
-    .profile-head{padding:0 28px 22px}
+    .profile-head{padding:0 22px 14px}
     .avatar-wrap{
       position:relative;display:inline-block;
-      margin-top:-46px;margin-bottom:14px;
+      margin-top:-38px;margin-bottom:10px;
     }
     #avatar{
-      width:90px;height:90px;border-radius:50%;
+      width:76px;height:76px;border-radius:50%;
       border:4px solid var(--surface);
       box-shadow:var(--sh-md);object-fit:cover;
       background:var(--surface-2);
@@ -263,7 +267,7 @@
     #avatar:hover{transform:scale(1.04)}
     .online-dot{
       position:absolute;bottom:4px;right:4px;
-      width:16px;height:16px;
+      width:14px;height:14px;
       background:var(--success);border-radius:50%;
       border:3px solid var(--surface);
     }
@@ -272,7 +276,7 @@
     .identity-left{flex:1;min-width:0}
 
     #name{
-      font-size:23px;font-weight:700;letter-spacing:-.6px;
+      font-size:20px;font-weight:700;letter-spacing:-.6px;
       background:linear-gradient(135deg,var(--text-1) 0%,var(--text-2) 100%);
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;
       background-clip:text;
@@ -284,19 +288,19 @@
     }
 
     #user{
-      display:inline-block;margin-top:3px;
-      font-size:15px;font-weight:500;color:var(--accent);
+      display:inline-block;margin-top:2px;
+      font-size:14px;font-weight:500;color:var(--accent);
     }
     #user:hover{text-decoration:underline}
 
     #date{
       display:inline-flex;align-items:center;gap:5px;
-      margin-top:9px;font-size:12px;font-weight:500;
+      margin-top:6px;font-size:11px;font-weight:500;
       color:var(--text-3);
       background:var(--surface-2);border:1px solid var(--border);
-      border-radius:100px;padding:4px 10px;
+      border-radius:100px;padding:3px 9px;
     }
-    #date svg{width:12px;height:12px;fill:var(--text-3);flex-shrink:0}
+    #date svg{width:11px;height:11px;fill:var(--text-3);flex-shrink:0}
 
     .gh-btn{
       display:inline-flex;align-items:center;gap:6px;
@@ -313,22 +317,22 @@
     .gh-btn:active{transform:scale(.96)}
 
     /* bio */
-    .bio-row{padding:0 28px 20px;border-top:1px solid var(--border)}
-    .bio-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text-3);margin-bottom:7px;margin-top:18px}
-    #bio{font-size:15px;font-weight:400;color:var(--text-2);line-height:1.65}
+    .bio-row{padding:0 22px 12px;border-top:1px solid var(--border)}
+    .bio-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text-3);margin-bottom:5px;margin-top:12px}
+    #bio{font-size:14px;font-weight:400;color:var(--text-2);line-height:1.55}
 
     /* stats */
     .stats-row{
       display:grid;grid-template-columns:repeat(3,1fr);
-      padding:18px 18px;gap:10px;
+      padding:10px 14px;gap:8px;
       border-top:1px solid var(--border);
     }
     .stat-block{
       background:var(--surface-2);
       border:1px solid var(--border);
-      border-radius:16px;padding:16px 12px;
+      border-radius:14px;padding:10px 12px;
       text-align:center;
-      display:flex;flex-direction:column;align-items:center;gap:4px;
+      display:flex;flex-direction:column;align-items:center;gap:2px;
       transition:all .2s ease;position:relative;overflow:hidden;
     }
     .stat-block::before{
@@ -341,21 +345,21 @@
     .stat-block:hover{background:var(--surface-3);transform:translateY(-2px);box-shadow:var(--sh-sm)}
     .stat-block:hover::before{transform:scaleX(1)}
     .stat-num{
-      font-size:22px;font-weight:700;letter-spacing:-.8px;
+      font-size:19px;font-weight:700;letter-spacing:-.8px;
       color:var(--text-1);font-family:"DM Mono",monospace;
     }
-    .stat-lbl{font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.6px}
+    .stat-lbl{font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.6px}
 
     /* ── INFO GRID ── */
     .info-grid{
       display:grid;grid-template-columns:1fr 1fr;
-      gap:10px;padding:18px 18px 24px;
+      gap:8px;padding:10px 14px 16px;
       border-top:1px solid var(--border);
     }
     .info-chip{
-      display:flex;align-items:center;gap:12px;
+      display:flex;align-items:center;gap:10px;
       background:var(--surface-2);border:1px solid var(--border);
-      border-radius:16px;padding:14px;
+      border-radius:14px;padding:11px 12px;
       min-width:0;
       transition:all .2s ease;
     }
@@ -368,10 +372,10 @@
     a.info-chip:active{transform:scale(.97)}
 
     .chip-icon{
-      width:40px;height:40px;border-radius:12px;
+      width:34px;height:34px;border-radius:10px;
       display:grid;place-items:center;flex-shrink:0;
     }
-    .chip-icon svg{width:20px;height:20px}
+    .chip-icon svg{width:17px;height:17px}
     .ci-a{background:var(--chip-a-bg)} .ci-a svg{fill:var(--chip-a-fg)}
     .ci-b{background:var(--chip-b-bg)} .ci-b svg{fill:var(--chip-b-fg)}
     .ci-c{background:var(--chip-c-bg)} .ci-c svg{fill:var(--chip-c-fg)}
