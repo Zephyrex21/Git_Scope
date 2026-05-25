@@ -7,7 +7,7 @@ https://gitscope-zephyr.netlify.app/
 
 ## Preview
 
-![Preview](screenshot.png)
+![Preview](./assets/screenshot.png)
 
 ## Features
 - GitHub profile search
